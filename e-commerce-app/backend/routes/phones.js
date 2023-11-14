@@ -6,7 +6,7 @@ const { ObjectId } = require("mongodb");
 require("../server");
 
 let db;
-//assign value of database to global db variable from getDb func that takes collection name argument 
+//assign value of database to global db variable from getDb func that takes collection name argument
 router.all("*", async function (req, res, next) {
   db = await getDb("phones");
   next();
