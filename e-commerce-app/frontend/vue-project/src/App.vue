@@ -1,7 +1,7 @@
 <script></script>
 
 <template>
-  <div>
+  <div class="main">
     <router-view />
   </div>
 </template>
@@ -12,5 +12,11 @@
 html,
 body {
   font-family: "Montserrat", sans-serif;
+}
+.main {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 1920px;
 }
 </style>

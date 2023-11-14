@@ -2,7 +2,6 @@
 import AppNavbar from "../components/AppNavbar.vue";
 import MainCarousel from "../components/startPage/MainCarousel.vue";
 import OneItemCard from "../components/OneItemCard.vue";
-
 export default {
   components: {
     AppNavbar,

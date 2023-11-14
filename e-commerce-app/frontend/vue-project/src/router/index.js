@@ -1,13 +1,25 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeMain from "../routes/HomeMain.vue";
-import PhonePage from "../components/PhonePage.vue";
+import PhonesPage from "../routes/PhonesPage.vue";
+import PhonePage from "../routes/PhonePage.vue";
 import NotFound from "../routes/NotFound.vue";
+import ShoppingCart from "../routes/ShoppingCart.vue";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: HomeMain,
+  },
+  {
+    path: "/phones",
+    name: "PhonesPage",
+    component: PhonesPage,
+  },
+  {
+    path: "/cart",
+    name: "ShoppingCart",
+    component: ShoppingCart,
   },
   {
     path: "/phones/:id",

@@ -1,13 +1,14 @@
 <script>
+import AppNavbar from "../components/AppNavbar.vue";
 import ErrorHandler from "../components/ErrorHandler.vue";
 
 export default {
   components: {
+    AppNavbar,
     ErrorHandler,
   },
 };
 </script>
-
 <script setup>
 import { onMounted, ref } from "vue";
 import router from "../router";
@@ -25,6 +26,7 @@ onMounted(() => {
   getPhones()
     .then((data) => {
       phones.value = data;
+      console.log(phones.value);
     })
     .catch((err) => {
       error.value = err.message;
@@ -33,48 +35,43 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container">
+  <div>
+    <app-navbar />
+    <h1>Phones</h1>
     <ErrorHandler v-if="error" :errorProps="error" />
+    <div class="container">
+      <div class="phone" v-for="phone in phones" :key="phone._id">
+        <div class="image" @click="goToPhonePage(phone._id)">
+          <img
+            v-if="phone.image"
+            :src="phone.image"
+            :alt="phone.name + ' image'"
+          />
+          <img v-else src="../../assets/no-image-icon.jpg" alt="No image" />
+        </div>
 
-    <div class="phone" v-for="phone in phones" :key="phone._id">
-      <div class="image" @click="goToPhonePage(phone._id)">
-        <img
-          v-if="phone.image"
-          :src="phone.image"
-          :alt="phone.name + ' image'"
-        />
-        <img v-else src="../../assets/no-image-icon.jpg" alt="No image" />
-      </div>
+        <div class="info">
+          <p class="price">{{ phone.price.$numberDouble }}</p>
 
-      <div class="info">
-        <p class="price">{{ phone.price.$numberDouble }}</p>
-        <p class="title">{{ phone.name }}</p>
-        <button
-          @click="
-            this.$store.commit('addToCart', [phone?.collection, phone._id])
-          "
-        >
-          Add to cart
-        </button>
+          <p class="title">{{ phone.name }}</p>
+          <button
+            @click="
+              this.$store.commit('addToCart', [phone?.collection, phone._id])
+            "
+          >
+            Add to cart
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<style>
-.container {
-  margin-top: 50px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-}
+<style scoped>
 .phone {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  max-width: 200px;
   height: 350px;
   text-align: center;
   border-radius: 10px;
@@ -82,7 +79,7 @@ onMounted(() => {
 .phone:hover {
   box-shadow: 0px 3px 16px -10px rgb(0, 0, 0);
 }
-.phone .image {
+.details .image {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,14 +88,14 @@ onMounted(() => {
   cursor: pointer;
   overflow: hidden;
 }
-.phone img {
+.details .phone img {
   height: 100%;
   object-fit: contain;
 }
 
 .phone .info {
   position: relative;
-  max-width: 200px;
+  width: 100%;
   height: 150px;
 }
 
@@ -119,9 +116,6 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .container {
-    gap: 5px;
-  }
   .phone {
     width: 160px;
     height: 310px;
